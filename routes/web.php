@@ -14,5 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('layouts.layout');
+    return view('pages.index');
 });
+
+Route::get('/user/{login}', [\App\Http\Controllers\UserController::class, 'index'])->name('user.show');

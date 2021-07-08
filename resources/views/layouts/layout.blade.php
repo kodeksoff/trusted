@@ -12,7 +12,13 @@
 <body class="antialiased">
 <div id="app">
     <x-header/>
-    <x-main/>
+
+    <main>
+        <div class="container max-w-7xl mx-auto mt-10">
+            {{ $slot }}
+        </div>
+    </main>
+
 </div>
 <script src="{{ mix('/js/app.js') }}" defer></script>
 </body>
