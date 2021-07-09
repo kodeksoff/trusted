@@ -19,15 +19,21 @@
                  class="origin-top-right absolute right-0 mt-4 w-96 rounded-b-md shadow-lg p-3.5 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
                  role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
                 <form method="post" @submit.prevent="login">
-                    <div class="mt-2 flex rounded-md shadow-sm">
-                        <input type="text" name="login" id="login" v-model="form.login"
-                               class="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-md sm:text-sm border-gray-300"
+                    <div class="mt-2 flex flex-col">
+                        <input type="text" name="login" id="login"
+                               v-model="form.login"
+                               :class="{ 'border-red-300' : errors && errors.login }"
+                               class="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-md shadow-sm sm:text-sm border-gray-300"
                                placeholder="Логин">
+                        <div class="text-sm" v-if="errors && errors.login">{{ errors.login[0] }}</div>
                     </div>
-                    <div class="mt-2 flex rounded-md shadow-sm">
-                        <input type="password" name="password" id="password" v-model="form.password"
-                               class="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-md sm:text-sm border-gray-300"
+                    <div class="mt-2 flex flex-col">
+                        <input type="password" name="password" id="password"
+                               v-model="form.password"
+                               :class="{ 'border-red-300' : errors && errors.password }"
+                               class="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-md shadow-sm sm:text-sm border-gray-300"
                                placeholder="Пароль">
+                        <div class="text-sm" v-if="errors && errors.password">{{ errors.password[0] }}</div>
                     </div>
                     <div class="mt-2 flex">
                         <label for="remember_me" class="flex items-center">
@@ -39,10 +45,13 @@
                     </div>
                     <div class="flex mt-4">
                         <button type="submit"
-                                class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                                :disabled="manyRequests"
+                                :class="[ manyRequests ? 'bg-indigo-200' : 'bg-indigo-600' ]"
+                                class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                             Войти
                         </button>
                     </div>
+                    <div class="text-sm" v-if="errors && errors.password">{{ errors.password[0] }}</div>
                 </form>
             </div>
         </transition>
@@ -54,6 +63,8 @@ export default {
     data() {
         return {
             showDropdown: false,
+            errors: {},
+            manyRequests: false,
             form: {
                 login: null,
                 password: null,
@@ -65,9 +76,18 @@ export default {
             this.showDropdown = !this.showDropdown
         },
         login() {
-            axios.post(this.route, this.form)
-                .then(res => this.reload())
-                .catch(err => console.log(err));
+            axios.post(this.route, this.form).then(response => {
+                this.reload()
+                this.errors = {}
+                }).catch(error => {
+                    if (error.response.status === 422) {
+                        this.errors = error.response.data.errors
+                    }
+                    if (error.response.status === 429) {
+                        this.manyRequests = true
+                        this.errors = {}
+                    }
+                });
         },
         reload() {
             location.reload()

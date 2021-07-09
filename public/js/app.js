@@ -1895,11 +1895,22 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['route'],
   data: function data() {
     return {
       showDropdown: false,
+      errors: {},
+      manyRequests: false,
       form: {
         login: null,
         password: null
@@ -1913,10 +1924,19 @@ __webpack_require__.r(__webpack_exports__);
     login: function login() {
       var _this = this;
 
-      axios.post(this.route, this.form).then(function (res) {
-        return _this.reload();
-      })["catch"](function (err) {
-        return console.log(err);
+      axios.post(this.route, this.form).then(function (response) {
+        _this.reload();
+
+        _this.errors = {};
+      })["catch"](function (error) {
+        if (error.response.status === 422) {
+          _this.errors = error.response.data.errors;
+        }
+
+        if (error.response.status === 429) {
+          _this.manyRequests = true;
+          _this.errors = {};
+        }
       });
     },
     reload: function reload() {
@@ -20138,77 +20158,87 @@ var render = function() {
                       }
                     },
                     [
-                      _c(
-                        "div",
-                        { staticClass: "mt-2 flex rounded-md shadow-sm" },
-                        [
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.form.login,
-                                expression: "form.login"
-                              }
-                            ],
-                            staticClass:
-                              "focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-md sm:text-sm border-gray-300",
-                            attrs: {
-                              type: "text",
-                              name: "login",
-                              id: "login",
-                              placeholder: "Логин"
-                            },
-                            domProps: { value: _vm.form.login },
-                            on: {
-                              input: function($event) {
-                                if ($event.target.composing) {
-                                  return
-                                }
-                                _vm.$set(_vm.form, "login", $event.target.value)
-                              }
+                      _c("div", { staticClass: "mt-2 flex flex-col" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.form.login,
+                              expression: "form.login"
                             }
-                          })
-                        ]
-                      ),
+                          ],
+                          staticClass:
+                            "focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-md shadow-sm sm:text-sm border-gray-300",
+                          class: {
+                            "border-red-300": _vm.errors && _vm.errors.login
+                          },
+                          attrs: {
+                            type: "text",
+                            name: "login",
+                            id: "login",
+                            placeholder: "Логин"
+                          },
+                          domProps: { value: _vm.form.login },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(_vm.form, "login", $event.target.value)
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _vm.errors && _vm.errors.login
+                          ? _c("div", { staticClass: "text-sm" }, [
+                              _vm._v(_vm._s(_vm.errors.login[0]))
+                            ])
+                          : _vm._e()
+                      ]),
                       _vm._v(" "),
-                      _c(
-                        "div",
-                        { staticClass: "mt-2 flex rounded-md shadow-sm" },
-                        [
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.form.password,
-                                expression: "form.password"
-                              }
-                            ],
-                            staticClass:
-                              "focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-md sm:text-sm border-gray-300",
-                            attrs: {
-                              type: "password",
-                              name: "password",
-                              id: "password",
-                              placeholder: "Пароль"
-                            },
-                            domProps: { value: _vm.form.password },
-                            on: {
-                              input: function($event) {
-                                if ($event.target.composing) {
-                                  return
-                                }
-                                _vm.$set(
-                                  _vm.form,
-                                  "password",
-                                  $event.target.value
-                                )
-                              }
+                      _c("div", { staticClass: "mt-2 flex flex-col" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.form.password,
+                              expression: "form.password"
                             }
-                          })
-                        ]
-                      ),
+                          ],
+                          staticClass:
+                            "focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-md shadow-sm sm:text-sm border-gray-300",
+                          class: {
+                            "border-red-300": _vm.errors && _vm.errors.password
+                          },
+                          attrs: {
+                            type: "password",
+                            name: "password",
+                            id: "password",
+                            placeholder: "Пароль"
+                          },
+                          domProps: { value: _vm.form.password },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.form,
+                                "password",
+                                $event.target.value
+                              )
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _vm.errors && _vm.errors.password
+                          ? _c("div", { staticClass: "text-sm" }, [
+                              _vm._v(_vm._s(_vm.errors.password[0]))
+                            ])
+                          : _vm._e()
+                      ]),
                       _vm._v(" "),
                       _c("div", { staticClass: "mt-2 flex" }, [
                         _c(
@@ -20242,8 +20272,16 @@ var render = function() {
                           "button",
                           {
                             staticClass:
-                              "inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500",
-                            attrs: { type: "submit" }
+                              "inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500",
+                            class: [
+                              _vm.manyRequests
+                                ? "bg-indigo-200"
+                                : "bg-indigo-600"
+                            ],
+                            attrs: {
+                              type: "submit",
+                              disabled: _vm.manyRequests
+                            }
                           },
                           [
                             _vm._v(
@@ -20251,7 +20289,13 @@ var render = function() {
                             )
                           ]
                         )
-                      ])
+                      ]),
+                      _vm._v(" "),
+                      _vm.errors && _vm.errors.password
+                        ? _c("div", { staticClass: "text-sm" }, [
+                            _vm._v(_vm._s(_vm.errors.password[0]))
+                          ])
+                        : _vm._e()
                     ]
                   )
                 ]
