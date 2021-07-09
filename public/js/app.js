@@ -1903,7 +1903,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['route'],
   data: function data() {
@@ -2090,11 +2089,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: ['user'],
+  props: ['user', 'route'],
   data: function data() {
     return {
       showDropdown: false
@@ -2105,9 +2101,16 @@ __webpack_require__.r(__webpack_exports__);
       this.showDropdown = !this.showDropdown;
     },
     logout: function logout() {
-      axios.post('/logout').then()["catch"](function (err) {
-        return console.log(err);
+      var _this = this;
+
+      axios.post(this.route).then(function (response) {
+        _this.reload();
+      })["catch"](function (error) {
+        console.log(error);
       });
+    },
+    reload: function reload() {
+      location.reload();
     }
   }
 });
@@ -20289,13 +20292,7 @@ var render = function() {
                             )
                           ]
                         )
-                      ]),
-                      _vm._v(" "),
-                      _vm.errors && _vm.errors.password
-                        ? _c("div", { staticClass: "text-sm" }, [
-                            _vm._v(_vm._s(_vm.errors.password[0]))
-                          ])
-                        : _vm._e()
+                      ])
                     ]
                   )
                 ]
@@ -20642,7 +20639,7 @@ var render = function() {
                 "div",
                 {
                   staticClass:
-                    "origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none",
+                    "origin-top-right absolute right-0 mt-4 w-48 rounded-b-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none",
                   attrs: {
                     role: "menu",
                     "aria-orientation": "vertical",
@@ -20656,27 +20653,13 @@ var render = function() {
                     {
                       staticClass: "block px-4 py-2 text-sm text-gray-700",
                       attrs: {
-                        href: "#",
+                        href: "/user/" + this.user.login,
                         role: "menuitem",
                         tabindex: "-1",
                         id: "user-menu-item-0"
                       }
                     },
                     [_vm._v("Your Profile - " + _vm._s(this.user.login))]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "a",
-                    {
-                      staticClass: "block px-4 py-2 text-sm text-gray-700",
-                      attrs: {
-                        href: "#",
-                        role: "menuitem",
-                        tabindex: "-1",
-                        id: "user-menu-item-1"
-                      }
-                    },
-                    [_vm._v("Settings")]
                   ),
                   _vm._v(" "),
                   _c(

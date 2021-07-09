@@ -51,7 +51,6 @@
                             Войти
                         </button>
                     </div>
-                    <div class="text-sm" v-if="errors && errors.password">{{ errors.password[0] }}</div>
                 </form>
             </div>
         </transition>

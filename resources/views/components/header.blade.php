@@ -9,8 +9,8 @@
                 <div class="hidden md:block">
                     <div class="ml-10 flex items-baseline space-x-4">
                         <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-                        <a href="#"
-                           class="bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium">Dashboard</a>
+                        <a href="/"
+                           class="bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium">Главная</a>
 
                         <a href="#"
                            class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Team</a>
@@ -29,7 +29,7 @@
             <div class="hidden md:block">
                 <div class="ml-4 flex items-center md:ml-6">
                     @auth()
-                        <user-card :user="{{ Auth::user()  }}"></user-card>
+                        <user-card :user="{{ Auth::user()  }}" route="{{ route('logout') }}"></user-card>
                     @endauth
                     @guest()
                         <login-dropdown route="{{ route('login') }}"></login-dropdown>
