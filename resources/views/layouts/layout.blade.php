@@ -6,6 +6,10 @@
 
     <title>{{ $title ?? config('app.name') }}</title>
 
+@if ($description)
+    <meta name="description" content="{{ $description }}">
+@endif
+
     <link rel="stylesheet" href="{{ mix('css/app.css') }}">
 
 </head>

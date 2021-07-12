@@ -12,7 +12,9 @@ class UserController extends Controller
     {
         $user = User::findByLogin($login);
 
-        app(MetaBuilder::class)->title('Страница пользователя ' . $user->login);
+        app(MetaBuilder::class)
+            ->title('Страница пользователя ' . $user->login)
+            ->description('Страница пользователя ' . $user->login);
 
         return view('pages.user', compact('user'));
     }

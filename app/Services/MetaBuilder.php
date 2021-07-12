@@ -7,13 +7,17 @@ class MetaBuilder
     public $title = null;
     public $description = null;
 
-    public function title($title): string
+    public function title($title): MetaBuilder
     {
-        return $this->title = $title .' - ' . config('app.name');
+        $this->title = $title .' - ' . config('app.name');
+
+        return $this;
     }
 
-    public function description($description): string
+    public function description($description): MetaBuilder
     {
-        return $this->title = $description;
+        $this->description = $description;
+
+        return $this;
     }
 }

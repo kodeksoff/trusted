@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use App\Http\View\Composers\TitleComposer;
+use App\Http\View\Composers\MetaComposer;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
@@ -25,6 +25,6 @@ class ViewServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        View::composer('layouts.layout', TitleComposer::class);
+        View::composer('layouts.layout', MetaComposer::class);
     }
 }
