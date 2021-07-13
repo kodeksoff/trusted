@@ -7,17 +7,17 @@ use Illuminate\View\View;
 
 class MetaComposer
 {
-    public function __construct()
-    {
-
-    }
+    public function __construct(){}
 
     public function compose(View $view)
     {
-        if (!$view->title) {
-            $meta = app(MetaBuilder::class);
-        }
-        $meta = $view;
+        $meta = $this->hasViewMeta($view);
+
         $view->with('title', $meta->title)->with('description', $meta->description);
+    }
+
+    public function hasViewMeta($view)
+    {
+        return $view->title || $view->description ? $view : app(MetaBuilder::class);
     }
 }
