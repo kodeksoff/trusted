@@ -6,8 +6,16 @@ use App\Models\User;
 use App\Services\MetaBuilder;
 use Illuminate\Http\Request;
 
+/**
+ * Class UserController
+ * @package App\Http\Controllers
+ */
 class UserController extends Controller
 {
+    /**
+     * @param $login
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function index($login)
     {
         $user = User::findByLogin($login);

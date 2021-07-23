@@ -41,6 +41,10 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    /**
+     * @param $login
+     * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Model
+     */
     public static function findByLogin($login)
     {
         return static::query()->where('login', $login)->firstOrFail();
