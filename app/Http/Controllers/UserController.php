@@ -13,7 +13,7 @@ use Illuminate\Http\Request;
 class UserController extends Controller
 {
     /**
-     * @param $login
+     * @param User $user
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function index(User $user)
