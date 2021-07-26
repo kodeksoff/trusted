@@ -13,3 +13,12 @@ Vue.component('register-page', require('./components/pages/register').default)
 const app = new Vue({
     store,
 }).$mount('#app')
+
+
+
+const usrBtn = document.getElementById('user-menu-button')
+const usrPopup = document.getElementById('user-menu-popup')
+
+usrBtn.addEventListener('click', () => {
+    usrPopup.classList.toggle('hidden')
+})

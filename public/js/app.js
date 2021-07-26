@@ -2232,6 +2232,11 @@ vue__WEBPACK_IMPORTED_MODULE_1__.default.component('register-page', __webpack_re
 var app = new vue__WEBPACK_IMPORTED_MODULE_1__.default({
   store: _store__WEBPACK_IMPORTED_MODULE_0__.default
 }).$mount('#app');
+var usrBtn = document.getElementById('user-menu-button');
+var usrPopup = document.getElementById('user-menu-popup');
+usrBtn.addEventListener('click', function () {
+  usrPopup.classList.toggle('hidden');
+});
 
 /***/ }),
 

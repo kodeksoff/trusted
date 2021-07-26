@@ -16,10 +16,8 @@ class UserController extends Controller
      * @param $login
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function index($login)
+    public function index(User $user)
     {
-        $user = User::findByLogin($login);
-
         app(MetaBuilder::class)
             ->title('Страница пользователя ' . $user->login)
             ->description('Страница пользователя ' . $user->login);

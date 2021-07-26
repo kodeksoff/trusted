@@ -17,4 +17,4 @@ Route::get('/', function () {
     return view('pages.index');
 });
 
-Route::get('/user/{login}', [\App\Http\Controllers\UserController::class, 'index'])->name('user.show');
+Route::get('/user/{user:login}', [\App\Http\Controllers\UserController::class, 'index'])->name('user.show');
