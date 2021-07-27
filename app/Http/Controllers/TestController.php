@@ -14,7 +14,15 @@ class TestController extends Controller
 
     public function category($path)
     {
-        $category = Category::whereProducts($path)->firstOrFail();
+
+        $chains = collect(explode('/', $path))->slice(-1, 1);
+
+        $category = Category::with('childrenRecursive')->whereSlug($chains->first())->first();
+
+        $d = $category->toArray();
+
+        dd($category->toArray(), $d);
+
         $products = $category->products;
 
         app(MetaBuilder::class)
@@ -22,5 +30,10 @@ class TestController extends Controller
             ->description($category->description);
 
         return view('pages.catalog.category', compact('category', 'products'));
+    }
+
+    public function c(array $array)
+    {
+        #subs = [];
     }
 }
