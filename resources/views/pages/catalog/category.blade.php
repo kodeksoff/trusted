@@ -1,7 +1,3 @@
 <x-layout>
-    {{ $category->title }}
-
-    @foreach($products as $product)
-        {{ $product->title }}
-    @endforeach
+    {{ $cur }}
 </x-layout>
