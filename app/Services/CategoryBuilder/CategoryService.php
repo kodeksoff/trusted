@@ -15,6 +15,17 @@ class CategoryService
         return $this->findCurrentCategory($chain);
     }
 
+    public function generateUri($path)
+    {
+        $chain = $this->chains($path)->last();
+        $array =  $this->findCurrentCategory($chain);
+        $slug = null;
+        foreach ($array as $item) {
+            $slug .= '/'. $item['slug'];
+        }
+        return $slug;
+    }
+
     protected function chains(string $path)
     {
         $chains = collect(explode('/', $path));
@@ -45,6 +56,7 @@ class CategoryService
                 $array[$key] = $category;
             }
         }
+        array_push($array, $lastCategory);
         return array_values($array);
     }
 

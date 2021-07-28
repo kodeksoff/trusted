@@ -19,7 +19,9 @@ class TestController extends Controller
 
         $category = new CategoryService();
 
-        dd($category->get($path));
+
+
+        dd($category->get($path), $category->generateUri($path), \request()->path());
 
     }
 
