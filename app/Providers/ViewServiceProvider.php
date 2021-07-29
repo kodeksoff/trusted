@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Http\View\Composers\BreadcrumbsComposer;
 use App\Http\View\Composers\MetaComposer;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
@@ -26,5 +27,6 @@ class ViewServiceProvider extends ServiceProvider
     public function boot()
     {
         View::composer('layouts.layout', MetaComposer::class);
+        View::composer('components.breadcrumbs', BreadcrumbsComposer::class);
     }
 }

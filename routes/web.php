@@ -22,5 +22,5 @@ Route::get('/user/{user:login}', [\App\Http\Controllers\UserController::class, '
 
 Route::get('/testt', [\App\Http\Controllers\TestController::class, 'test']);
 
-Route::get('{path?}', [\App\Http\Controllers\TestController::class, 'category'])
+Route::get('{path?}', [\App\Http\Controllers\TestController::class, 'resolver'])
     ->where('path', '[a-zA-Z0-9/_-]+');

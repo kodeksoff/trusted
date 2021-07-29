@@ -7,7 +7,7 @@ use Illuminate\View\View;
 
 class MetaComposer
 {
-    public function __construct(){}
+    public function __construct() {}
 
     public function compose(View $view)
     {
