@@ -17,11 +17,13 @@ class BreadCrumbsService
     {
         $array = [];
         $categories = CategoryService::instance();
-        foreach ($categories->category as $key => $category) {
-            $array[$key]['title'] = $category['title'];
-            $array[$key]['url'] = '/' . $categories[$key]['slug'];
+        if (!empty($categories->category)) {
+            foreach ($categories->category as $key => $category) {
+                $array[$key]['title'] = $category['title'];
+                $array[$key]['url'] = '/' . $categories->paths[$key]['slug'] . '/';
+            }
         }
-
+        array_unshift($array, ['title' => 'Главная', 'url' => '/']);
         return $array;
     }
 }

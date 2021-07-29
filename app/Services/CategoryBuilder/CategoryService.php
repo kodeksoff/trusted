@@ -131,6 +131,10 @@ class CategoryService
         return $recursive ? $recursive : false;
     }
 
+    /**
+     * @param $categories
+     * @return array
+     */
     protected function buildPaths($categories)
     {
         $array = [];
