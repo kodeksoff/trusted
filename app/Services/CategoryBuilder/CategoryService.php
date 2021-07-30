@@ -19,7 +19,7 @@ class CategoryService
     /**
      * @return CategoryService
      */
-    public static function instance()
+    public static function instance(): CategoryService
     {
         return static::$instance ?? (static::$instance = new CategoryService());
     }
@@ -35,13 +35,13 @@ class CategoryService
         $this->category = $this->findCurrentCategory($chain);
         $this->uri = $this->generateUrl();
         $this->paths = $this->buildPaths($this->category);
-        return $this->checkUrl($controller);
+        return $this->transfer($controller);
     }
 
     /**
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector|void|null
      */
-   public function checkUrl($controller)
+   public function transfer($controller)
     {
         if (!request()->is($this->uri) && (config('catalog.seo_url') === true)) {
             return redirect($this->uri, 301);
@@ -50,6 +50,14 @@ class CategoryService
             return abort(404);
         }
         return $controller->category($this->category);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCurrentCategory()
+    {
+        return collect($this->category)->last();
     }
 
     /**
@@ -135,7 +143,7 @@ class CategoryService
      * @param $categories
      * @return array
      */
-    protected function buildPaths($categories)
+    protected function buildPaths($categories): array
     {
         $array = [];
         foreach ($categories as $key => $category) {

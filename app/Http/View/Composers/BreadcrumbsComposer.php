@@ -11,7 +11,7 @@ class BreadcrumbsComposer
 
     public function compose(View $view)
     {
-        $breadcrumbs = BreadCrumbsService::instance()->build();
+        $breadcrumbs = BreadCrumbsService::instance()->build($view);
         $view->with('breadcrumbs', $breadcrumbs);
     }
 }

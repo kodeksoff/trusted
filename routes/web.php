@@ -20,7 +20,5 @@ Route::get('/', function () {
 Route::get('/user/{user:login}', [\App\Http\Controllers\UserController::class, 'index'])
     ->name('user.show');
 
-Route::get('/testt', [\App\Http\Controllers\TestController::class, 'test']);
-
 Route::get('{path?}', [\App\Http\Controllers\TestController::class, 'resolver'])
     ->where('path', '[a-zA-Z0-9/_-]+');

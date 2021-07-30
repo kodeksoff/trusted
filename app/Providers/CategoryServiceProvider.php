@@ -3,25 +3,22 @@
 namespace App\Providers;
 
 use App\Services\CategoryBuilder\CategoryService;
-use App\Services\MetaBuilder;
 use Illuminate\Support\ServiceProvider;
 
-class AppServiceProvider extends ServiceProvider
+class CategoryServiceProvider extends ServiceProvider
 {
     /**
-     * Register any application services.
+     * Register services.
      *
      * @return void
      */
     public function register()
     {
-        $this->app->singleton(MetaBuilder::class, function() {
-            return new MetaBuilder();
-        });
+        $this->app->instance('categories', CategoryService::instance());
     }
 
     /**
-     * Bootstrap any application services.
+     * Bootstrap services.
      *
      * @return void
      */
