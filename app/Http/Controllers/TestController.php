@@ -14,6 +14,7 @@ class TestController extends Controller
 
     public function resolver($path)
     {
+        $data = Categories::select();
         return Categories::resolver($this, $path);
     }
 
@@ -24,6 +25,7 @@ class TestController extends Controller
         $products = Product::wherehas('categories', function ($query) use ($category) {
             $query->whereIn('category_id', $category);
         })->get();
+
         return view('pages.catalog.category', compact('products'));
     }
 }

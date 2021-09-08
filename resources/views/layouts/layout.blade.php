@@ -18,10 +18,15 @@
     <x-header/>
 
     <main>
-        <div class="container max-w-7xl mx-auto mt-10">
+        <div class="container mx-auto mt-2">
+            <x-breadcrumbs/>
+        </div>
+        <div class="container mx-auto mt-10 mb-10">
             {{ $slot }}
         </div>
     </main>
+
+    <x-footer />
 
 </div>
 <script src="{{ mix('/js/app.js') }}" defer></script>

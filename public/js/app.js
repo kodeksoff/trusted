@@ -2237,6 +2237,9 @@ var usrPopup = document.getElementById('user-menu-popup');
 usrBtn.addEventListener('click', function () {
   usrPopup.classList.toggle('hidden');
 });
+usrPopup.addEventListener('mouseleave', function () {
+  usrPopup.classList.toggle('hidden');
+});
 
 /***/ }),
 

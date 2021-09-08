@@ -22,3 +22,7 @@ const usrPopup = document.getElementById('user-menu-popup')
 usrBtn.addEventListener('click', () => {
     usrPopup.classList.toggle('hidden')
 })
+
+usrPopup.addEventListener('mouseleave', () => {
+    usrPopup.classList.toggle('hidden')
+})
