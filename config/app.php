@@ -178,8 +178,6 @@ return [
         App\Providers\FortifyServiceProvider::class,
         App\Providers\ViewServiceProvider::class,
 
-        Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
-
     ],
 
     /*
